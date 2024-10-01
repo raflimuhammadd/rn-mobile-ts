@@ -1,45 +1,33 @@
-import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import { NavigationRouteConfigMap, NavigationContainer } from "react-navigation";
+import HomeScreen from "./src/screens/HomeScreen";
+import ImageScreen from "./src/screens/ImageScreen";
+import { NavigationStackOptions } from "react-navigation-stack";
 
-class App extends Component {
-  constructor(props:any) {
-    super(props);
-    this.state = { }; 
-  }
-  render() {
-    return (
-    <View>
-      <Text style={{color: 'blue'}}>Hello Cuy</Text>
-      <Text
-      style = {{
-        fontSize: 28,
-        fontWeight: 'bold',
-        fontStyle: 'italic',
-        textAlign: 'center'
-        }}>
-          Hello Cuy2
-      </Text>
-      <Text
-      style = {{
-        color: '#DC143C',
-        fontSize: 28,
-        textDecorationLine: 'line-through',
-        textAlign: 'left'
-      }}>
-        Rp.20.000,00
-      </Text>
-      <Text
-      style = {{
-        color: 'rgb(0, 0, 0)',
-        fontSize: 28,
-        textDecorationLine: 'underline',
-        textAlign: 'right'
-      }}>
-        Rp.10.000,00
-      </Text>
-    </View>
-    )
-  }
-}
+// Definisikan tipe untuk navigator
+type AppRoutes = {
+  Home: undefined;
+  Components: undefined;
+  List: undefined;
+  Image: undefined;
+  Counter: undefined;
+  Color: undefined;
+  Square: undefined;
+};
 
-export default App;
+// Gunakan tipe `NavigationRouteConfigMap` untuk rute-rute yang digunakan
+const navigator = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Image: ImageScreen,
+  },
+  {
+    initialRouteName: "Home",
+    defaultNavigationOptions: {
+      title: "App",
+    } as NavigationStackOptions,
+  }
+);
+
+export default createAppContainer(navigator) as NavigationContainer;
