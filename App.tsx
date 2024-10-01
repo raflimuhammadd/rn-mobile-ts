@@ -1,33 +1,62 @@
-import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
-import { NavigationRouteConfigMap, NavigationContainer } from "react-navigation";
-import HomeScreen from "./src/screens/HomeScreen";
-import ImageScreen from "./src/screens/ImageScreen";
-import { NavigationStackOptions } from "react-navigation-stack";
+import React, { Component } from 'react';
+import {  View, Text, StatusBar, Image, TouchableOpacity } from 'react-native';
 
-// Definisikan tipe untuk navigator
-type AppRoutes = {
-  Home: undefined;
-  Components: undefined;
-  List: undefined;
-  Image: undefined;
-  Counter: undefined;
-  Color: undefined;
-  Square: undefined;
-};
-
-// Gunakan tipe `NavigationRouteConfigMap` untuk rute-rute yang digunakan
-const navigator = createStackNavigator(
-  {
-    Home: HomeScreen,
-    Image: ImageScreen,
-  },
-  {
-    initialRouteName: "Home",
-    defaultNavigationOptions: {
-      title: "App",
-    } as NavigationStackOptions,
+class App extends Component {
+  constructor(props: any) {
+    super(props);
+    this.state = {};
   }
-);
+  render() {
+    return (
+      <View style={{flex: 1}}>
+        <StatusBar barStyle="light-content" backgroundColor="#09bd75" />
+        <View
+        style={{
+          backgroundColor: '#03fc98',
+          justifyContent: 'center',
+          alignItems: 'center',
+          elevation: 5,
+          paddingVertical: 20,
+        }}>
+          <Text style={{
+            color: '#FFFFFF',
+            fontWeight: 'bold',
+            fontSize: 25
+            }}>
+              Header
+          </Text>
+        </View>
+        <View style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+          <Image source={require('./src/images/mountain.jpg')}
+          style={{width: 300, height: 300}}
+          />
+        </View>
+        <TouchableOpacity
+        style={{
+          backgroundColor: '#03fc98',
+          paddingVertical: 20,
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 20,
+          marginHorizontal: 20,
+          borderRadius: 20,
+          elevation: 3,
+        }}>
+          <Text style = {{
+            color: '#FFFFFF',
+            justifyContent: 'center',
+            fontWeight: 'bold',
+            fontSize: 25,
+          }} onPress={() => console.log('Klik')}>
+            Click Here!
+          </Text>
+        </TouchableOpacity>
+      </View>
+    )
+  }
+}
 
-export default createAppContainer(navigator) as NavigationContainer;
+export default App;
