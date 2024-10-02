@@ -9,6 +9,8 @@ import {
   TextInput,
   ScrollView,
   StyleSheet,
+  FlatList,
+  Alert,
 } from 'react-native';
 
 // Define state interface
@@ -16,21 +18,46 @@ interface AppState {
   header: string,
   value: boolean,
   username: string,
+  dataMahasiswa: {
+    namaMhs: string;
+    npmMhs: string;
+  }[],
 }
 
 class App extends Component<{}, AppState> {
-  constructor(props: any) {
+  constructor(props: FlatList) {
     super(props);
     this.state = {
       header: 'Home',
       value: true,
-      username: ''
+      username: '',
+      dataMahasiswa: [
+        {
+          namaMhs: 'Toni',
+          npmMhs: '202412'
+        },
+        {
+          namaMhs: 'Dean',
+          npmMhs: '202413',
+        },
+        {
+          namaMhs: 'Kevin',
+          npmMhs: '202414',
+        },
+        {
+          namaMhs: 'Lily',
+          npmMhs: '202415',
+        },
+        {
+          namaMhs: 'Pott',
+          npmMhs: '202416',
+        },
+      ]
     };
   }
   render() {
     return (
-      <ScrollView style={styles.container}>
-        <View style={{ flex: 1 }}>
+        <View style={styles.container}>
           <StatusBar barStyle="light-content" backgroundColor="#09bd75" />
           <View style={styles.imageContainer}>
             <Text style={{
@@ -41,72 +68,39 @@ class App extends Component<{}, AppState> {
               {this.state.header}
             </Text>
           </View>
-          <View style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+          <TouchableOpacity 
+            style={styles.image}
+            onPress={() => {
+              Alert.alert('Information', 'Anda akan menghapus gambar ini?', [
+                {
+                  text: 'Cancel',
+                  onPress: () => console.log('cancel ditekan!'),
+                  style: 'cancel',
+                },
+                {
+                  text: 'OK',
+                  onPress: () => console.log('OK ditekan!'),
+                },
+              ])
+            }}
+            >
             <Image source={require('./src/images/mountain.jpg')}
               style={{ width: 300, height: 300 }}
             />
-          </View>
-          <View style={styles.switch}>
-            <Switch 
-              value={this.state.value} 
-              onValueChange={() => 
-                this.setState({value: !this.state.value})}>
-            </Switch>
-          </View>
-          <TextInput
-            value={this.state.username}
-            style={styles.textInput}
-            onChangeText={value => this.setState({ username: value })}
+          </TouchableOpacity>
+          <FlatList
+            style={styles.flatListStyle}
+            data={this.state.dataMahasiswa}
+            renderItem={({item, index}) => (
+              <View
+                style={styles.flatListItem}>
+                  <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>{item.namaMhs}</Text>
+                  <Text style={{color: 'white', fontWeight: 'bold'}}>{item.npmMhs}</Text>
+              </View>
+            )}
+            keyExtractor={item => item.npmMhs}
           />
-          <TouchableOpacity
-            style={styles.button}>
-            <Text style={{
-              color: '#FFFFFF',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: 25,
-            }} onPress={() => console.log('Halo Rafli')}>
-              Click Here!
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}>
-            <Text style={{
-              color: '#FFFFFF',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: 25,
-            }} onPress={() => console.log('Halo Rafli')}>
-              Click Here!
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}>
-            <Text style={{
-              color: '#FFFFFF',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: 25,
-            }} onPress={() => console.log('Halo Rafli')}>
-              Click Here!
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}>
-            <Text style={{
-              color: '#FFFFFF',
-              justifyContent: 'center',
-              fontWeight: 'bold',
-              fontSize: 25,
-            }} onPress={() => console.log('Halo Rafli')}>
-              Click Here!
-            </Text>
-          </TouchableOpacity>
         </View>
-      </ScrollView>
     );
   }
 }
@@ -124,7 +118,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderWidth: 1,
-    borderColor: '#03fc98', 
+    borderColor: '#03fc98',
     marginHorizontal: 20,
     paddingHorizontal: 10,
     borderRadius: 3,
@@ -151,6 +145,18 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  flatListItem: {
+    marginBottom: 20,
+    backgroundColor: '#03fc98',
+    marginHorizontal: 20,
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  flatListStyle: {
+    flex: 1,
+    paddingTop: 20
+  }
 });
 
 export default App;
